@@ -32,5 +32,10 @@ namespace DoctorWho.Db.Repositories
             _context.Enemies.Remove(enemy);
             _context.SaveChanges();
         }
+
+        public Enemy GetEnemy(int enemyid)
+        {
+            return _context.Enemies.Where(e => e.EnemyId == enemyid).FirstOrDefault();
+        }
     }
 }

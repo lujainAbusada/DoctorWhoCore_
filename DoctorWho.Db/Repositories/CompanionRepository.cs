@@ -34,5 +34,10 @@ namespace DoctorWho.Db.Repositories
             _context.Companions.Remove(companion);
             _context.SaveChanges();
         }
+
+        public Companion GetCompanion(int companionId)
+        {
+            return _context.Companions.Where(c => c.CompanionId == companionId).FirstOrDefault();
+        }
     }
 }

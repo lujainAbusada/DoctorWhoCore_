@@ -54,5 +54,10 @@ namespace DoctorWho.Db.Repositories
             _context.Doctors.Remove(doctor);
             _context.SaveChanges();
         }
+
+        public List<Doctor> GetDoctors()
+        {
+            return _context.Doctors.ToList();
+        }
     }
 }
