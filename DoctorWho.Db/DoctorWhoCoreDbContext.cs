@@ -18,10 +18,18 @@ namespace DoctorWho.Db
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            var seedData = new SeedData();
             modelBuilder.Entity<EpisodeCompanion>().HasKey(ec => new { ec.EpisodeId, ec.CompanionId });
             modelBuilder.Entity<EpisodeEnemy>().HasKey(ee => new { ee.EpisodeId, ee.EnemyId });
             modelBuilder.Entity<Episode>().HasOne(e => e.Author).WithMany(s => s.Episodes).HasForeignKey(e => e.AuthorId);
             modelBuilder.Entity<Episode>().HasOne(e => e.Doctor).WithMany(s => s.Episodes).HasForeignKey(e => e.DoctorId);
+            modelBuilder.Entity<Author>().HasData(seedData.AuthorTableData());
+            modelBuilder.Entity<Doctor>().HasData(seedData.DoctorTableData());
+            modelBuilder.Entity<Enemy>().HasData(seedData.EnemyTableData());
+            modelBuilder.Entity<Companion>().HasData(seedData.CompanionTableData());
+            modelBuilder.Entity<Episode>().HasData(seedData.EpisodeTableData());
+            modelBuilder.Entity<EpisodeEnemy>().HasData(seedData.EpisodeEnemyTableData());
+            modelBuilder.Entity<EpisodeCompanion>().HasData(seedData.EpisodeCompanionTableData());
         }
     }
 }
