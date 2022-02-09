@@ -5,11 +5,16 @@ namespace DoctorWho.Db
 {
     public class DoctorWhoCoreDbContext:DbContext
     {
+        public string fnEnemies(int episodeId)
+                  => throw new NotSupportedException();
+        public string fnCompanions(int episodeId)
+                  => throw new NotSupportedException();
         public DbSet<Author> Authors { get; set; }
         public DbSet<Enemy> Enemies { get; set; }
         public DbSet<Episode> Episodes { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Companion> Companions { get; set; }
+        public DbSet<ViewEpisodes> ViewEpisodes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -31,6 +36,11 @@ namespace DoctorWho.Db
             modelBuilder.Entity<Episode>().HasData(seedData.EpisodeTableData());
             modelBuilder.Entity<EpisodeEnemy>().HasData(seedData.EpisodeEnemyTableData());
             modelBuilder.Entity<EpisodeCompanion>().HasData(seedData.EpisodeCompanionTableData());
+            modelBuilder.Entity<ViewEpisodes>().HasNoKey().ToView("viewEpisodes");
+            modelBuilder.HasDbFunction(typeof(DoctorWhoCoreDbContext).GetMethod(nameof(fnEnemies), new[] { typeof(int) }))
+            .HasName("fnEnemies");
+            modelBuilder.HasDbFunction(typeof(DoctorWhoCoreDbContext).GetMethod(nameof(fnCompanions), new[] { typeof(int) }))
+            .HasName("fnCompanions");
         }
     }
 }
